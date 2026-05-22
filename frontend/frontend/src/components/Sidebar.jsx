@@ -1,14 +1,38 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { LayoutDashboard, FolderGit2, ShieldAlert } from "lucide-react";
 
 function Sidebar() {
   return (
     <div className="sidebar">
-      <h1>ReviewAI</h1>
+      <h1>
+        <ShieldAlert size={28} color="var(--accent-color)" />
+        ReviewAI
+      </h1>
 
       <nav>
-        <Link to="/">Dashboard</Link>
-        <Link to="/repositories">Repositories</Link>
-        <Link to="/reviews">Reviews</Link>
+        <NavLink 
+          to="/" 
+          className={({ isActive }) => isActive ? "active" : ""}
+        >
+          <LayoutDashboard size={20} />
+          Dashboard
+        </NavLink>
+        
+        <NavLink 
+          to="/repositories"
+          className={({ isActive }) => isActive ? "active" : ""}
+        >
+          <FolderGit2 size={20} />
+          Repositories
+        </NavLink>
+        
+        <NavLink 
+          to="/reviews"
+          className={({ isActive }) => isActive ? "active" : ""}
+        >
+          <ShieldAlert size={20} />
+          Reviews
+        </NavLink>
       </nav>
     </div>
   );
