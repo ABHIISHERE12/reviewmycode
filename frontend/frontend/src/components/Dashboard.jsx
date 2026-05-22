@@ -31,13 +31,10 @@ function Dashboard() {
     fetchAnalytics();
   }, []);
 
-  const handleConnectGithub = async () => {
-    try {
-      const res = await api.get("/github/login");
-      window.location.href = res.data.url;
-    } catch (error) {
-      console.error("Failed to initiate GitHub login:", error);
-    }
+  const handleConnectGithub = () => {
+    const token = localStorage.getItem("token");
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+    window.location.href = `${apiUrl}/github/connect?token=${token}`;
   };
 
   const containerVars = {

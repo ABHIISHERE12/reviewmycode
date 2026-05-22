@@ -54,7 +54,15 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: user,
+    data: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      githubConnected: !!user.githubId,
+      githubUsername: user.githubUsername,
+      githubAvatar: user.githubAvatar,
+    },
   });
 });
 

@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on mount
     const checkUser = async () => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -16,9 +15,10 @@ export const AuthProvider = ({ children }) => {
           const res = await api.get("/auth/me");
           setUser(res.data.data);
         } catch (err) {
-          console.error("Failed to fetch user:", err);
+          console.error("Session expired or invalid token:", err);
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          setUser(null);
         }
       }
       setLoading(false);
@@ -31,13 +31,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
       setUser(res.data.user);
       return { success: true };
     } catch (err) {
-      return { 
-        success: false, 
-        message: err.response?.data?.error || "Login failed" 
+      return {
+        success: false,
+        message: err.response?.data?.error || "Login failed",
       };
     }
   };
@@ -46,42 +45,35 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.post("/auth/register", { name, email, password });
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
       setUser(res.data.user);
       return { success: true };
     } catch (err) {
-      return { 
-        success: false, 
-        message: err.response?.data?.error || "Registration failed" 
+      return {
+        success: false,
+        message: err.response?.data?.error || "Registration failed",
       };
     }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     setUser(null);
   };
 
-  const updateGithubStatus = (githubData) => {
+  // Called by GithubCallback after successful OAuth redirect
+  const updateGithubStatus = ({ githubUsername, githubAvatar }) => {
     setUser((prev) => ({
       ...prev,
       githubConnected: true,
-      githubUsername: githubData.githubUsername,
-      githubAvatar: githubData.githubAvatar,
-    }));
-    // Also update local storage cache if you want
-    const cachedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    localStorage.setItem("user", JSON.stringify({
-      ...cachedUser,
-      githubConnected: true,
-      githubUsername: githubData.githubUsername,
-      githubAvatar: githubData.githubAvatar,
+      githubUsername,
+      githubAvatar,
     }));
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateGithubStatus }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, updateGithubStatus }}
+    >
       {children}
     </AuthContext.Provider>
   );

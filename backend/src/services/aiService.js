@@ -1,25 +1,29 @@
-const { OpenAI } = require("openai");
+const { GoogleGenAI, Type } = require("@google/genai");
 
 class AiService {
   constructor() {
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+    this.ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
     });
   }
 
   async analyzeCodeDiff(diffContent, promptTemplate) {
     try {
-      const completion = await this.openai.chat.completions.create({
-        model: "gpt-4-turbo",
-        messages: [
-          { role: "system", content: promptTemplate.system },
-          { role: "user", content: `Here is the git diff:\n\n${diffContent}` },
+      const response = await this.ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `${promptTemplate.system}\n\nHere is the git diff:\n\n${diffContent}` }],
+          },
         ],
-        response_format: { type: "json_object" },
-        temperature: 0.2, // Low temperature for consistent analytical output
+        config: {
+          responseMimeType: "application/json",
+          temperature: 0.2, // Low temperature for consistent analytical output
+        },
       });
 
-      const resultText = completion.choices[0].message.content;
+      const resultText = response.text();
       return JSON.parse(resultText);
     } catch (error) {
       console.error("AI Analysis Failed:", error);

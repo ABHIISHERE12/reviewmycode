@@ -1,10 +1,9 @@
 const express = require("express");
-const { githubLogin, githubCallback } = require("../controllers/github");
-const { protect } = require("../middleware/auth");
+const { githubConnect, githubCallback } = require("../controllers/github");
 
 const router = express.Router();
 
-router.get("/login", protect, githubLogin);
-router.post("/callback", protect, githubCallback);
+router.get("/connect", githubConnect);
+router.get("/callback", githubCallback);
 
 module.exports = router;
