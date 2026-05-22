@@ -9,11 +9,12 @@ import Sidebar from "./components/Sidebar";
 import Auth from "./components/Auth";
 import GithubCallback from "./components/GithubCallback";
 import { Loader2 } from "lucide-react";
+import ReviewDetails from "./components/ReviewDetails";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-  
+
   if (loading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center bg-[#0a0a0a]">
@@ -21,11 +22,11 @@ const ProtectedRoute = ({ children }) => {
       </div>
     );
   }
-  
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return children;
 };
 
@@ -44,8 +45,18 @@ function App() {
     <Routes>
       <Route path="/login" element={!user ? <Auth /> : <Navigate to="/" />} />
       <Route path="/github/callback" element={<GithubCallback />} />
-      
-      {/* Protected Layout */}
+
+      {/* Full-page protected route for reviews (no sidebar) */}
+      <Route
+        path="/reviews/:repoId"
+        element={
+          <ProtectedRoute>
+            <ReviewDetails />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Protected Layout with Sidebar */}
       <Route
         path="*"
         element={
@@ -66,6 +77,7 @@ function App() {
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/repositories" element={<Repositories />} />
                       <Route path="/reviews" element={<Reviews />} />
+                      <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                   </div>
                 </main>

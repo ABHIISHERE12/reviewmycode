@@ -52,12 +52,12 @@ function Dashboard() {
       
       {/* Hero Section */}
       <motion.div variants={itemVars} className="relative rounded-3xl p-8 overflow-hidden glass-card border-white/10 bg-gradient-to-br from-surface to-panel">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-xl blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="flex flex-col gap-2">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
-              Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{user?.name || "Developer"} 👋</span>
+              Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-purple-600">{user?.name || "Developer"} 👋</span>
             </h1>
             <p className="text-gray-400 text-lg max-w-xl mt-1">
               Your workspaces are performing beautifully. AI has generated <span className="text-gray-200 font-medium">{stats.totalReviews}</span> reviews and found <span className="text-danger font-medium">{stats.criticalSecurityIssues}</span> critical vulnerabilities.
@@ -74,7 +74,7 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-4 rounded-2xl bg-black/40 border border-white/5 backdrop-blur-md">
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-black/40 border border-white/5 backdrop-blur-md">
             <div className="relative w-16 h-16 shrink-0">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                 <path className="text-white/10" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -97,7 +97,7 @@ function Dashboard() {
       {/* Stats Grid */}
       <motion.div variants={itemVars} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {[
-          { title: "Total PRs", value: stats.totalPRs, change: "", trend: "up", icon: FileCode2, color: "text-blue-400", bg: "bg-blue-400/10" },
+          { title: "Total PRs", value: stats.totalPRs, change: "", trend: "up", icon: FileCode2, color: "text-transparent bg-clip-text", bg: "bg-indigo-400/10" },
           { title: "Active Repositories", value: stats.totalRepos, change: "", trend: "up", icon: FolderGit2, color: "text-purple-400", bg: "bg-purple-400/10" },
           { title: "Security Issues", value: stats.criticalSecurityIssues, change: "", trend: "down", icon: ShieldAlert, color: "text-danger", bg: "bg-danger/10" },
           { title: "Total AI Reviews", value: stats.totalReviews, change: "", trend: "up", icon: Zap, color: "text-warning", bg: "bg-warning/10" }
@@ -105,7 +105,7 @@ function Dashboard() {
           <motion.div 
             key={i}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="p-5 rounded-2xl glass-card group cursor-default relative overflow-hidden"
+            className="p-5 rounded-xl glass-card group cursor-default relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             
@@ -127,11 +127,11 @@ function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <motion.div variants={itemVars} className="lg:col-span-2 p-6 rounded-3xl glass-card flex flex-col justify-center relative overflow-hidden min-h-[300px]">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-600/5 pointer-events-none" />
           <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-[#24292e] border border-white/10">
+                <div className="p-2 rounded-xl bg-[#24292e] border border-white/10">
                   <GithubIcon size={24} className="text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white">
@@ -147,12 +147,12 @@ function Dashboard() {
                 {!user?.githubConnected ? (
                   <button 
                     onClick={handleConnectGithub}
-                    className="px-4 py-2 rounded-lg bg-primary hover:bg-primary-hover text-sm font-medium text-white transition-colors"
+                    className="px-4 py-2 rounded-xl bg-primary hover:bg-primary-hover text-sm font-medium text-white transition-colors"
                   >
                     Connect with GitHub
                   </button>
                 ) : (
-                  <button className="px-4 py-2 rounded-lg bg-transparent border border-white/10 hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors">
+                  <button className="px-4 py-2 rounded-xl bg-transparent border border-white/10 hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors">
                     Manage Connection
                   </button>
                 )}
@@ -162,10 +162,10 @@ function Dashboard() {
             {user?.githubConnected && (
               <div className="shrink-0 flex items-center justify-center p-4">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-success/20 rounded-full blur-xl animate-pulse-slow" />
-                  <div className="w-24 h-24 rounded-full border-2 border-success/30 flex items-center justify-center relative bg-surface">
-                    <img src={user.githubAvatar} alt="GitHub Avatar" className="w-20 h-20 rounded-full border-2 border-surface" />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 bg-success border-2 border-surface rounded-full flex items-center justify-center">
+                  <div className="absolute inset-0 bg-success/20 rounded-xl blur-xl animate-pulse-slow" />
+                  <div className="w-24 h-24 rounded-xl border-2 border-success/30 flex items-center justify-center relative bg-surface">
+                    <img src={user.githubAvatar} alt="GitHub Avatar" className="w-20 h-20 rounded-xl border-2 border-surface" />
+                    <div className="absolute bottom-0 right-0 w-6 h-6 bg-success border-2 border-surface rounded-xl flex items-center justify-center">
                       <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>

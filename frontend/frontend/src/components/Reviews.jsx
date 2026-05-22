@@ -49,13 +49,13 @@ function Reviews() {
   const getSeverityIcon = (sev) => {
     if (sev === "critical" || sev === "high") return <ShieldAlert size={16} className="text-danger" />;
     if (sev === "medium") return <AlertTriangle size={16} className="text-warning" />;
-    return <Info size={16} className="text-blue-400" />;
+    return <Info size={16} className="text-transparent bg-clip-text" />;
   };
 
   const getSeverityClasses = (sev) => {
     if (sev === "critical" || sev === "high") return "bg-danger/10 text-danger border-danger/20";
     if (sev === "medium") return "bg-warning/10 text-warning border-warning/20";
-    return "bg-blue-400/10 text-blue-400 border-blue-400/20";
+    return "bg-indigo-400/10 text-transparent bg-clip-text border-indigo-400/20";
   };
 
   if (loading) {
@@ -84,7 +84,7 @@ function Reviews() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
         {/* Left Panel: Issues List */}
         <motion.div variants={itemVars} className="lg:col-span-1 flex flex-col gap-4 h-[600px] overflow-y-auto pr-2">
-          <div className="glass-card rounded-2xl p-5 border-white/10 h-full">
+          <div className="glass-card rounded-xl p-5 border-white/10 h-full">
             <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-4 flex items-center gap-2">
               <ShieldAlert size={16} className="text-danger" /> Findings ({selectedReview.findings?.length || 0})
             </h3>
@@ -101,10 +101,10 @@ function Reviews() {
                   }`}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-md flex items-center gap-1 truncate max-w-[70%]">
+                    <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-xl flex items-center gap-1 truncate max-w-[70%]">
                       <FileText size={10} className="shrink-0" /> {finding.file}
                     </span>
-                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${getSeverityClasses(finding.severity)}`}>
+                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-xl ${getSeverityClasses(finding.severity)}`}>
                       {finding.severity}
                     </span>
                   </div>
@@ -124,7 +124,7 @@ function Reviews() {
 
         {/* Right Panel: Detailed AI Review */}
         {selectedFinding ? (
-          <motion.div variants={itemVars} className="lg:col-span-2 glass-card rounded-2xl border-white/10 flex flex-col overflow-hidden relative h-[600px]">
+          <motion.div variants={itemVars} className="lg:col-span-2 glass-card rounded-xl border-white/10 flex flex-col overflow-hidden relative h-[600px]">
             {/* Animated Gradient Header */}
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
             
@@ -142,7 +142,7 @@ function Reviews() {
             <div className="p-6 flex-1 overflow-y-auto">
               {/* Category */}
               <div className="mb-6 flex gap-2">
-                <span className="px-3 py-1 bg-white/5 text-gray-300 text-xs rounded-lg font-medium border border-white/10 capitalize">
+                <span className="px-3 py-1 bg-white/5 text-gray-300 text-xs rounded-xl font-medium border border-white/10 capitalize">
                   Category: {selectedFinding.category}
                 </span>
               </div>
@@ -180,7 +180,7 @@ function Reviews() {
             </div>
           </motion.div>
         ) : (
-          <motion.div variants={itemVars} className="lg:col-span-2 glass-card rounded-2xl border-white/10 flex items-center justify-center text-gray-400 h-[600px]">
+          <motion.div variants={itemVars} className="lg:col-span-2 glass-card rounded-xl border-white/10 flex items-center justify-center text-gray-400 h-[600px]">
             Select a finding to view details
           </motion.div>
         )}

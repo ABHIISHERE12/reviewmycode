@@ -19,21 +19,47 @@ const ReviewSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  architectureScore: {
+    type: Number,
+    default: 0,
+  },
+  securityScore: {
+    type: Number,
+    default: 0,
+  },
+  performanceScore: {
+    type: Number,
+    default: 0,
+  },
+  maintainabilityScore: {
+    type: Number,
+    default: 0,
+  },
+  strengths: [String],
+  improvements: [String],
   findings: [
     {
-      file: String,
-      line: Number,
       issue: String,
       severity: {
         type: String,
         enum: ["low", "medium", "high", "critical"],
       },
-      suggestion: String,
-      category: {
-        type: String,
-        enum: ["security", "performance", "architecture", "maintainability", "bug"],
-      },
+      impact: String,
+      fix: String,
     },
+  ],
+  fileReviews: [
+    {
+      file: String,
+      issues: [
+        {
+          issue: String,
+          severity: String,
+          suggestion: String,
+        }
+      ],
+      suggestions: [String]
+    }
   ],
   createdAt: {
     type: Date,

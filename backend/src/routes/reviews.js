@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.use(protect);
 
-router.get("/:prId", getReviewByPR);
+// IMPORTANT: specific routes must come BEFORE wildcard routes
 router.get("/repo/:repoId", getReviewsByRepo);
+router.get("/:prId", getReviewByPR);
 
 module.exports = router;

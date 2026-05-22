@@ -46,6 +46,15 @@ class GithubService {
       throw new ErrorResponse("Failed to fetch PR diff", 500);
     }
   }
+
+  async getPullRequestFiles(owner, repo, pullNumber) {
+    try {
+      const response = await this.api.get(`/repos/${owner}/${repo}/pulls/${pullNumber}/files`);
+      return response.data; // Array of files { filename, status, patch, ... }
+    } catch (error) {
+      throw new ErrorResponse("Failed to fetch PR files", 500);
+    }
+  }
 }
 
 module.exports = GithubService;
