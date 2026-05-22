@@ -5,6 +5,9 @@ const helmet = require("helmet");
 const { connectDB } = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 
+// Initialize workers
+require("./workers/aiWorker");
+
 // Connect to Database
 connectDB();
 
@@ -25,12 +28,12 @@ app.use(
 app.use(express.json());
 
 // Mount Routers (will be implemented in subsequent steps)
-// app.use("/api/auth", require("./routes/auth"));
-// app.use("/api/github", require("./routes/github"));
-// app.use("/api/repos", require("./routes/repos"));
-// app.use("/api/prs", require("./routes/prs"));
-// app.use("/api/webhooks", require("./routes/webhooks"));
-// app.use("/api/analytics", require("./routes/analytics"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/github", require("./routes/github"));
+app.use("/api/repos", require("./routes/repos"));
+app.use("/api/prs", require("./routes/prs"));
+app.use("/api/webhooks", require("./routes/webhooks"));
+app.use("/api/analytics", require("./routes/analytics"));
 
 app.get("/", (req, res) => {
   res.json({ message: "ReviewAI API is running" });
