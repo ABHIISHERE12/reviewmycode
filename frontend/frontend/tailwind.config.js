@@ -6,34 +6,27 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       colors: {
         background: '#0a0a0a',
         surface: '#111111',
         'surface-hover': '#1a1a1a',
         panel: '#141414',
         border: '#27272a',
-        'border-light': 'rgba(255, 255, 255, 0.08)',
         primary: '#3b82f6',
         'primary-hover': '#2563eb',
-        'primary-glow': 'rgba(59, 130, 246, 0.15)',
         success: '#10b981',
         warning: '#f59e0b',
         danger: '#ef4444',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-        'slide-up': 'slideUp 0.5s ease-out forwards',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        }
+      backdropBlur: {
+        xs: '2px',
       }
     },
   },
