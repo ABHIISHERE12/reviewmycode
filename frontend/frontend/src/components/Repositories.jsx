@@ -19,7 +19,7 @@ function Repositories() {
           <div className="card repo-card" key={repo.name}>
             <div className="repo-header">
               <h3 className="repo-name">
-                <Github size={20} />
+                <GitBranch size={20} />
                 {repo.name}
               </h3>
               <span className={`badge ${repo.status === 'Connected' ? 'badge-success' : 'badge-danger'}`}>
